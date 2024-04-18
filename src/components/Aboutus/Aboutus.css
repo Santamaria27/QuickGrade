@@ -1,0 +1,31 @@
+.heading{
+  text-align: center;
+  color: #000000;
+  font-size: 15px;
+}
+.about {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin: 50px 20px;
+    border-radius: 10px;
+  }
+  
+  .intro, .mission, .vision {
+    padding: 15px;
+    background:linear-gradient(rgba(196, 196, 196, 0.733),rgba(203, 203, 204, 0.937));
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.382); /* Added a proper box shadow */
+    transition: transform 0.3s ease-in-out; /* Added transition effect */
+  }
+  
+  /* Added hover effect */
+  .intro:hover, .mission:hover, .vision:hover {
+    transform: scale(1.05); /* Scale up on hover */
+  }
+  
+  .intro h2, .mission h3, .vision h3 {
+    margin-top: 10px;
+  }
+  
+  
