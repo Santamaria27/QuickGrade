@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import'./Navbar.css'
 import logo from '../../assets/Asset 3.png'
 
-const Navbar = () => {
+const Navbar = ({ onLoginClick }) => {
 
   const[sticky, setSticky]= useState(false);
 
@@ -20,7 +20,7 @@ const Navbar = () => {
             <li>About us</li>
             <li>Contact</li>
             <li>FAQ</li>
-            <li><button className='btn'>Login</button></li>
+            <li><button className='btn' onClick={onLoginClick}>Login</button></li>
         </ul>
     </nav>
   )
