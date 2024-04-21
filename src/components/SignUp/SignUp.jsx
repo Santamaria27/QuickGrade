@@ -19,6 +19,7 @@ const SignUp = () => {
   const [regPassword, setRegPassword] = useState("")
   const [profession, setProfession] = useState("")
   const [institution, setInstitution] = useState("")
+  const [errorMsg, setErrorMsg] = useState("")
   const userCollectionRef = collection(db, "Users") //for diff tables, different collections
 
   //Adding data to the database
@@ -39,7 +40,7 @@ const SignUp = () => {
       alert("Registered successfully");
     } 
     catch (error) {
-      console.log(error.message);
+      setErrorMsg(error.message)
     }
   };
   
@@ -91,8 +92,10 @@ const SignUp = () => {
 
       <div className='submit-container'>
         <div className='submit' onClick={register}>Sign Up</div>
+        {errorMsg && <div>{errorMsg}</div>}
       </div>
     </div>
+
   );
 }
 
