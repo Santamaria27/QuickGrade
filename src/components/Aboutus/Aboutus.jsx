@@ -4,7 +4,6 @@ import './Aboutus.css';
 const Aboutus = () => {
   return (
   <div className='heading'>
-    <h1>ABOUT US</h1>
     
     <div className='about'>
       <div className='intro'>

@@ -4,10 +4,10 @@ import Hero from './components/Hero/Hero'
 import Aboutus from './components/Aboutus/Aboutus'
 import Contact from './components/Contact/Contact'
 import Footer from './components/Footer/Footer'
-//import LoginForm from './components/LoginForm/LoginForm'//
 import Login from './components/Login/Login'
 import SignUp from './components/SignUp/SignUp'
 import Modal from './components/Modal/Modal'
+import Title from './components/Title/Title'
 
 const App = () => {
 
@@ -31,6 +31,9 @@ const App = () => {
     <div>
     <Navbar onLoginClick={toggleLogin} onSignUpClick={toggleSignUp}/>
     <Hero onSignUpClick={toggleSignUp}/>
+    <div className="container">
+      <Title subTitle="About Us" />
+    </div>
     <Aboutus/>
     <Contact/>
     <Footer/>
