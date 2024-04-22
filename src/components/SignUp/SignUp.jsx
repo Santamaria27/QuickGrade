@@ -38,15 +38,7 @@ const SignUp = () => {
         })
         
         localStorage.setItem('userId', regUser.uid);          
-        localStorage.setItem('username', name); 
-  
-        /*setUser({  // Save user profile data to context
-          userId: regUser.uid,
-          email: regEmail,
-          name: name
-        });*/
         console.log(localStorage.getItem('userId'))
-        console.log(localStorage.getItem('username'))
         //window.location.href = '/UploadPage'; // Redirect to another page after successful registration
     }
     } catch (error) {

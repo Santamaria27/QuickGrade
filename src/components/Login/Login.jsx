@@ -21,8 +21,12 @@ const Login = () => {
     signInWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
     // Signed in 
-    const user = userCredential.user;
+    const user = userCredential.user;    
     console.log(user);
+
+    localStorage.setItem('userId', user.uid); 
+    console.log(localStorage.getItem('userId'));    
+
     <Navigate to="/" replace />
   })
   .catch((error) => {
