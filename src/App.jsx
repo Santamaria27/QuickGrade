@@ -29,12 +29,12 @@ const App = () => {
 
   return (
     <div>
-    <Navbar onLoginClick={toggleLogin} onSignUpClick={toggleSignUp}/>
-    <Hero onSignUpClick={toggleSignUp}/>
-    <Aboutus/>
-    <Contact/>
-    <Footer/>
-    <Modal show={showLogin} onClose={toggleLogin}>
+      <Navbar onLoginClick={toggleLogin} onSignUpClick={toggleSignUp}/>
+      <Hero onSignUpClick={toggleSignUp}/>
+      <Aboutus/>
+      <Contact/>
+      <Footer/> 
+      <Modal show={showLogin} onClose={toggleLogin}>
         <Login />
       </Modal>
       <Modal show={showSignUp} onClose={toggleSignUp}>

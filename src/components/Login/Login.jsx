@@ -4,16 +4,14 @@ import './Login.css'; // Import Login styles if needed
 import email_icon from '../../assets/email.png'
 import password_icon from '../../assets/password.png'
 import { useState } from "react";
+
 //firebase imports
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebaseConfig1"
 import { Navigate } from "react-router-dom";
 
-
-
-
 const Login = () => {
-  const [error, setError]=useState(false);
+  const [error, setError]=useState("");
   const [email, setEmail]=useState("");
   const [password, setPassword]=useState("");
 
@@ -26,10 +24,9 @@ const Login = () => {
     const user = userCredential.user;
     console.log(user);
     <Navigate to="/" replace />
-    
   })
   .catch((error) => {
-    setError(true);
+    setError(error.message);
   });
   }
 
@@ -54,7 +51,7 @@ const Login = () => {
 
       <div className='submit-container'>
         <button type='submit' className='submit'onClick={handleLogin} >Login</button>
-        {error && <span>Wrong email or password</span>}
+        {error && <span>{error}</span>}
       </div>
     </div>
   );

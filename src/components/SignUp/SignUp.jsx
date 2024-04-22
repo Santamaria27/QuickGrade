@@ -9,7 +9,7 @@ import Institution_icon from '../../assets/institution.png'
 //backend imports
 import { auth, db } from '../../firebase-config';
 import {createUserWithEmailAndPassword} from 'firebase/auth'
-import {addDoc, collection} from 'firebase/firestore'
+import {setDoc, doc} from 'firebase/firestore'
 import {useState} from 'react'
 
 const SignUp = () => {
@@ -20,27 +20,37 @@ const SignUp = () => {
   const [profession, setProfession] = useState("")
   const [institution, setInstitution] = useState("")
   const [errorMsg, setErrorMsg] = useState("")
-  const userCollectionRef = collection(db, "Users") //for diff tables, different collections
 
-  //Adding data to the database
-  const createStudent = async() => {
-    await addDoc(userCollectionRef, {
-      Name:name, 
-      Email:regEmail,
-      Institution:  institution,
-      Profession: profession
-    })
-  }
-
-  const register = async () => {
+  const register = async (e) => {
+    e.preventDefault()
     try {
-      const user = await createUserWithEmailAndPassword(auth, regEmail, regPassword);
-      console.log(user);
-      await createStudent()
-      alert("Registered successfully");
-    } 
-    catch (error) {
-      setErrorMsg(error.message)
+      const userCredential = await createUserWithEmailAndPassword(auth, regEmail, regPassword);
+      const regUser = userCredential.user; 
+      console.log(regUser)    
+      
+      if (userCredential && regUser) {
+        const userNew = doc(db, 'Users',  regUser.uid); 
+        await setDoc(userNew, {
+          Name:name, 
+          Email:regEmail,
+          Institution:  institution,
+          Profession: profession
+        })
+        
+        localStorage.setItem('userId', regUser.uid);          
+        localStorage.setItem('username', name); 
+  
+        /*setUser({  // Save user profile data to context
+          userId: regUser.uid,
+          email: regEmail,
+          name: name
+        });*/
+        console.log(localStorage.getItem('userId'))
+        console.log(localStorage.getItem('username'))
+        //window.location.href = '/UploadPage'; // Redirect to another page after successful registration
+    }
+    } catch (error) {
+      setErrorMsg(error.message);
     }
   };
   
