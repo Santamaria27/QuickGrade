@@ -8,12 +8,13 @@ import { useState } from "react";
 //firebase imports
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebaseConfig1"
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [error, setError]=useState("");
   const [email, setEmail]=useState("");
   const [password, setPassword]=useState("");
+  const nav = useNavigate()
 
   const handleLogin=(e)=>{
     e.preventDefault();
@@ -23,11 +24,10 @@ const Login = () => {
     // Signed in 
     const user = userCredential.user;    
     console.log(user);
-
     localStorage.setItem('userId', user.uid); 
-    console.log(localStorage.getItem('userId'));    
+    console.log(localStorage.getItem('userId')); 
+    nav("/profile")
 
-    <Navigate to="/" replace />
   })
   .catch((error) => {
     setError(error.message);

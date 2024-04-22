@@ -11,6 +11,7 @@ import { auth, db } from '../../firebase-config';
 import {createUserWithEmailAndPassword} from 'firebase/auth'
 import {setDoc, doc} from 'firebase/firestore'
 import {useState} from 'react'
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
 
@@ -20,6 +21,7 @@ const SignUp = () => {
   const [profession, setProfession] = useState("")
   const [institution, setInstitution] = useState("")
   const [errorMsg, setErrorMsg] = useState("")
+  const nav = useNavigate()
 
   const register = async (e) => {
     e.preventDefault()
@@ -39,6 +41,7 @@ const SignUp = () => {
         
         localStorage.setItem('userId', regUser.uid);          
         console.log(localStorage.getItem('userId'))
+        nav('/profile')
         //window.location.href = '/UploadPage'; // Redirect to another page after successful registration
     }
     } catch (error) {

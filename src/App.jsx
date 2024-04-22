@@ -1,47 +1,17 @@
-import React, { useState } from 'react'
-import Navbar from './components/Navbar/Navbar'
-import Hero from './components/Hero/Hero'
-import Aboutus from './components/Aboutus/Aboutus'
-import Contact from './components/Contact/Contact'
-import Footer from './components/Footer/Footer'
-//import LoginForm from './components/LoginForm/LoginForm'//
-import Login from './components/Login/Login'
-import SignUp from './components/SignUp/SignUp'
-import Modal from './components/Modal/Modal'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import HomePage from './HomePage'; // Import the LandingPage component
+import Profile from './components/Profile/Profile';
 
-const App = () => {
-
-  const [showLogin, setShowLogin] = useState(false);
-  const [showSignUp, setShowSignUp] = useState(false);
-
- /*const toggleLoginForm = () => {
-    setShowLoginForm(!showLoginForm);
-  };*/
- 
-  const toggleLogin = () => {
-    setShowLogin(!showLogin);
-  };
-
-  const toggleSignUp = () => {
-    setShowSignUp(!showSignUp);
-  };
-
-
+function App() {
   return (
-    <div>
-      <Navbar onLoginClick={toggleLogin} onSignUpClick={toggleSignUp}/>
-      <Hero onSignUpClick={toggleSignUp}/>
-      <Aboutus/>
-      <Contact/>
-      <Footer/> 
-      <Modal show={showLogin} onClose={toggleLogin}>
-        <Login />
-      </Modal>
-      <Modal show={showSignUp} onClose={toggleSignUp}>
-        <SignUp />
-      </Modal>
-    </div>
-  )
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/profile" element={<Profile />} />
+        {/* Other routes for other pages */}
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
