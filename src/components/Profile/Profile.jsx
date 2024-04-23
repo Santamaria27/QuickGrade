@@ -103,7 +103,7 @@ function Profile() {
       // Get user ID from local storage
       const userId = localStorage.getItem('userId');
   
-      /*// Insert data into Firestore
+      // Insert data into Firestore
       const questionPaperRef = await addDoc(collection(db, 'questionPapers'), {
         userId,
         questionPaperUrl,
@@ -117,11 +117,10 @@ function Profile() {
         questionId,
         answerPaperUrl
       };
-  
-  
-      await addDoc(collection(db, 'answerPapers'), answerPaperData);
-  
-      alert('Files submitted successfully!');*/
+
+      await addDoc(collection(db, 'answerPapers'), answerPaperData); 
+      alert('Files submitted successfully!');
+      
     } catch (error) {
       console.error('Error submitting files:', error);
       alert('An error occurred while submitting files.');
