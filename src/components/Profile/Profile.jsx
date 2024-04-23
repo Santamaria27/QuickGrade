@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { auth, db } from '../../firebase-config';
-import { doc, getDoc } from 'firebase/firestore';
+import { auth, db, storage  } from '../../firebase-config';
+import { doc, getDoc, collection, addDoc } from 'firebase/firestore';
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import './Profile.css';
+
+//new imports
+import { ref, uploadBytes,listAll ,getDownloadURL } from 'firebase/storage';
+
 
 function Profile() {
   const [questionPaper, setQuestionPaper] = useState([]);
@@ -13,15 +17,15 @@ function Profile() {
   const handleDrop = (e, targetArea) => {
     e.preventDefault();
     const file = e.dataTransfer.files[0];
-
     if (targetArea === 'questionPaper') {
       setQuestionPaper([file]);
     } else if (targetArea === 'answerKey') {
       setAnswerKey([file]);
     } else if (targetArea === 'answerPaper') {
       setAnswerPaper([file]);
-    }
-  };
+  }
+};
+
 
   const allowDrop = (e) => {
     e.preventDefault();
@@ -29,6 +33,7 @@ function Profile() {
 
   const handleButtonClick = (targetArea) => {
     document.getElementById(`${targetArea}-file-input`).click();
+    
   };
 
   const handleFileChange = (e, targetArea) => {
@@ -40,7 +45,7 @@ function Profile() {
     } else if (targetArea === 'answerPaper') {
       setAnswerPaper([file]);
     }
-  };
+};
 
   //backend
   const [name, setName] = useState('');
@@ -73,6 +78,56 @@ function Profile() {
     await signOut(auth);
     nav('/');
   };
+
+  const submitFiles = async () => {
+    try {
+      // Upload files to Firestore
+      const uploadFile = async (file) => {
+        console.log(file[0].name);
+        const storageRef = ref(storage, `uploads/${file[0].name}`);
+        const metadata = { contentType: 'image/jpeg' };         
+        const snapshot = await uploadBytes(storageRef, file,metadata);
+
+        console.log('Upload successful:', file[0].name);
+        const downloadURL = await getDownloadURL(snapshot.ref);
+        console.log(downloadURL);
+        return downloadURL;
+      };
+
+      const [questionPaperUrl, answerKeyUrl, answerPaperUrl] = await Promise.all([
+        uploadFile(questionPaper),
+        uploadFile(answerKey),
+        uploadFile(answerPaper)
+      ]);
+  
+      // Get user ID from local storage
+      const userId = localStorage.getItem('userId');
+  
+      /*// Insert data into Firestore
+      const questionPaperRef = await addDoc(collection(db, 'questionPapers'), {
+        userId,
+        questionPaperUrl,
+        answerKeyUrl
+      });
+  
+      const questionId = questionPaperRef.id;
+  
+      const answerPaperData = {
+        userId,
+        questionId,
+        answerPaperUrl
+      };
+  
+  
+      await addDoc(collection(db, 'answerPapers'), answerPaperData);
+  
+      alert('Files submitted successfully!');*/
+    } catch (error) {
+      console.error('Error submitting files:', error);
+      alert('An error occurred while submitting files.');
+    }
+  };
+
 
   return (
     <div className="App">
@@ -120,6 +175,10 @@ function Profile() {
             onChange={(e) => handleFileChange(e, 'answerPaper')}
           />
         </div>
+        <div className='submit-container'>
+          <div className='submit' onClick={submitFiles}>Submit</div>
+        </div>
+        
       </div>
       <div className='submit-container'>
         <div className='submit' onClick={logout}>Sign Out</div>
