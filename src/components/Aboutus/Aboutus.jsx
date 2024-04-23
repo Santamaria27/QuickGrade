@@ -3,7 +3,7 @@ import './Aboutus.css';
 
 const Aboutus = () => {
   return (
-  <div className='heading'>
+  <div className='heading' >
     
     <div className='about'>
       <div className='intro'>

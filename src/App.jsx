@@ -14,10 +14,6 @@ const App = () => {
   const [showLogin, setShowLogin] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
 
- /*const toggleLoginForm = () => {
-    setShowLoginForm(!showLoginForm);
-  };*/
- 
   const toggleLogin = () => {
     setShowLogin(!showLogin);
   };
@@ -32,10 +28,11 @@ const App = () => {
     <Navbar onLoginClick={toggleLogin} onSignUpClick={toggleSignUp}/>
     <Hero onSignUpClick={toggleSignUp}/>
     <div className="container">
-      <Title subTitle="About Us" />
-    </div>
+      <Title title="ABOUT US"/>
     <Aboutus/>
+    <Title title="CONTACT US"/>
     <Contact/>
+    </div>
     <Footer/>
     <Modal show={showLogin} onClose={toggleLogin}>
         <Login />
