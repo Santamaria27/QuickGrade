@@ -85,8 +85,9 @@ function Profile() {
       const uploadFile = async (file) => {
         console.log(file[0].name);
         const storageRef = ref(storage, `uploads/${file[0].name}`);
-        const metadata = { contentType: 'image/jpeg' };         
-        const snapshot = await uploadBytes(storageRef, file,metadata);
+        
+        const metadata = { contentType: file[0].type };         
+        const snapshot = await uploadBytes(storageRef, file, metadata);
 
         console.log('Upload successful:', file[0].name);
         const downloadURL = await getDownloadURL(snapshot.ref);
