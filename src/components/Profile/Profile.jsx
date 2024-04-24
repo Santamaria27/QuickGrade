@@ -79,19 +79,19 @@ function Profile() {
         
       <h1>Welcome to QuickGrade {name} Teacher... Let's get started</h1>
       <div className="container">
-      <h2>Question Paper</h2>
-        <div className="box" onDrop={(e) => handleDrop(e, 'questionPaper')} onDragOver={allowDrop}>
-          <p>Drag and Drop Here</p>
-          {questionPaper.length > 0 && <img src={URL.createObjectURL(questionPaper[0])} alt="Question Paper" />}
-          <button onClick={() => handleButtonClick('questionPaper')}>Upload a Media Image</button>
-          <input
-            id="questionPaper-file-input"
-            type="file"
-            accept="image/*"
-            style={{ display: 'none' }}
-            onChange={(e) => handleFileChange(e, 'questionPaper')}
-          />
-        </div>
+          <h2>Question Paper</h2>
+          <div className="box" onDrop={(e) => handleDrop(e, 'questionPaper')} onDragOver={allowDrop}>
+            <p>Drag and Drop Here</p>
+            {questionPaper.length > 0 && <img src={URL.createObjectURL(questionPaper[0])} alt="Question Paper" />}
+            <button onClick={() => handleButtonClick('questionPaper')}>Upload a Media Image</button>
+            <input
+              id="questionPaper-file-input"
+              type="file"
+              accept="image/*"
+              style={{ display: 'none' }}
+              onChange={(e) => handleFileChange(e, 'questionPaper')}
+            />
+          </div>
 
         <h2>Answer Key</h2>
         <div className="box" onDrop={(e) => handleDrop(e, 'answerKey')} onDragOver={allowDrop}>
