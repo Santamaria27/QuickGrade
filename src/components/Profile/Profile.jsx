@@ -86,13 +86,20 @@ function Profile() {
         console.log(file[0].name);
         const storageRef = ref(storage, `uploads/${file[0].name}`);
         
-        const metadata = { contentType: file[0].type };         
-        const snapshot = await uploadBytes(storageRef, file, metadata);
+        const metadata = { contentType: file[0].type };   
+        console.log(`metadata: ${metadata}`)      
+        const snapshot = await uploadBytes(storageRef, file[0]);
 
         console.log('Upload successful:', file[0].name);
         const downloadURL = await getDownloadURL(snapshot.ref);
-        console.log(downloadURL);
-        return downloadURL;
+        console.log(`url: ${downloadURL}`);
+
+        const newRef = ref(`uploads/${file[0].name}`)
+        const downloadURL2 = await getDownloadURL(newRef.ref);
+        console.log (`url using name: ${{downloadURL2}}`);
+
+        return downloadURL;  
+
       };
 
       const [questionPaperUrl, answerKeyUrl, answerPaperUrl] = await Promise.all([
@@ -188,3 +195,6 @@ function Profile() {
 }
 
 export default Profile;
+
+/*https://firebasestorage.googleapis.com/v0/b/gradeease-57107.appspot.com/o/uploads%2Fhis_pc.jpg?alt=media&token=b5df8288-b2da-4d9a-95a1-65c854b2b3fd */
+/*https://firebasestorage.googleapis.com/v0/b/gradeease-57107.appspot.com/o/uploads%2FIMG-20240418-WA0008.jpg?alt=media&token=cab211e1-f0ae-41b0-8287-2800ecb224be */
