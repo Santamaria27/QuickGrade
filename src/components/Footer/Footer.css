@@ -1,10 +1,11 @@
 .footer{
-    margin:10px auto;
+    background: rgb(113, 113, 113);
+    margin:0px ;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-top: 1px soild #656464;
-    padding: 15px 0;
+    border-top: 2px soild #5a5a5a;
+    padding: 15px 15px;
 }
 .footer ul li{
     list-style: none;

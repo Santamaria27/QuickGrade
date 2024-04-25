@@ -4,6 +4,7 @@ import React from 'react';
 import user_icon from '../../assets/person.png'
 import email_icon from '../../assets/email.png'
 import password_icon from '../../assets/password.png'
+import profession_icon from '../../assets/profession.png'
 import Institution_icon from '../../assets/institution.png'
 
 //backend imports
@@ -78,8 +79,8 @@ const SignUp = () => {
         </div>
 
         <div className='input'>
-        <img alt="" />
-          <input type="Profession " placeholder='Profession'
+        <img src={profession_icon} alt="" />
+          <input type="Profession" placeholder='Profession'
           onChange={(e) => {
             setProfession(e.target.value);
           }} />
