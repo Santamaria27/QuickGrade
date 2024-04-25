@@ -1,22 +1,17 @@
-import React from 'react'
-import Navbar from './components/Navbar/Navbar'
-import Hero from './components/Hero/Hero'
-import Aboutus from './components/Aboutus/Aboutus'
-import Contact from './components/Contact/Contact'
-import Footer from './components/Footer/Footer'
-import LoginForm from './components/LoginForm/LoginForm'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import HomePage from './HomePage'; // Import the LandingPage component
+import Profile from './components/Profile/Profile';
 
-const App = () => {
+function App() {
   return (
-    <div>
-    <Navbar/>
-    <Hero/>
-    <Aboutus/>
-    <Contact/>
-    <Footer/>
-    <LoginForm/>
-    </div>
-  )
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/profile" element={<Profile />} />
+        {/* Other routes for other pages */}
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
