@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import'./Navbar.css'
+import { Link, animateScroll as scroll } from 'react-scroll'
 import logo from '../../assets/Asset 3.png'
 
 const Navbar = ({ onLoginClick }) => {
@@ -16,12 +17,56 @@ const Navbar = ({ onLoginClick }) => {
     <nav className={`container ${sticky? 'dark-nav' : '' } `}>
         <img src= {logo} alt="" className='logo' />
         <ul>
-            <li>Home</li>
-            <li>About us</li>
-            <li>Contact</li>
-            <li>FAQ</li>
-            <li><button className='btn' onClick={onLoginClick}>Login</button></li>
-        </ul>
+        <li>
+          <Link
+            activeClass="active"
+            to="home"
+            spy={true}
+            smooth={true}
+            offset={-70}
+            duration={500}
+          >
+            Home
+          </Link>
+        </li>
+        <li>
+          <Link
+            activeClass="active"
+            to="about"
+            spy={true}
+            smooth={true}
+            offset={-260}
+            duration={500}
+          >
+            About us
+          </Link>
+        </li>
+        <li>
+          <Link
+            activeClass="active"
+            to="contact"
+            spy={true}
+            smooth={true}
+            offset={-260}
+            duration={500}
+          >
+            Contact
+          </Link>
+        </li>
+        <li>
+          <Link
+            activeClass="active"
+            to="faq-container"
+            spy={true}
+            smooth={true}
+            offset={-100}
+            duration={500}
+          >
+            FAQ
+          </Link>
+        </li>
+        <li><button className='btn' onClick={onLoginClick}>Login</button></li>
+      </ul>
     </nav>
   )
 }

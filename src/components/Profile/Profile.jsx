@@ -136,7 +136,7 @@ function Profile() {
     <div className="App">
         
       <h1>Welcome to QuickGrade {name} Teacher... Let's get started</h1>
-      <div className="container">
+      <div className="contain">
           <h2>Question Paper</h2>
           <div className="box" onDrop={(e) => handleDrop(e, 'questionPaper')} onDragOver={allowDrop}>
             <p>Drag and Drop Here</p>

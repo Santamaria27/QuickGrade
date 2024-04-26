@@ -4,11 +4,10 @@ import './Aboutus.css';
 const Aboutus = () => {
   return (
   <div className='heading'>
-    <h1>ABOUT US</h1>
-    
+    <h2 className="section-heading">ABOUT US</h2>
     <div className='about'>
       <div className='intro'>
-        <h2>About Us:</h2>
+      <h3>About:</h3>
         <p>
           "At QuickGrade, we're passionate about revolutionizing the education sector through innovative technology. Our team is dedicated to providing educators with cutting-edge tools that streamline grading processes, saving valuable time and enhancing the overall teaching experience. With a commitment to excellence and user-centric design, we strive to empower educators worldwide to focus more on what truly matters: inspiring and guiding their students towards success."
         </p>
