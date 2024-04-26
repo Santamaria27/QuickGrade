@@ -94,10 +94,6 @@ function Profile() {
         const downloadURL = await getDownloadURL(snapshot.ref);
         console.log(`url: ${downloadURL}`);
 
-        const newRef = ref(`uploads/${file[0].name}`)
-        const downloadURL2 = await getDownloadURL(newRef.ref);
-        console.log (`url using name: ${{downloadURL2}}`);
-
         return downloadURL;  
 
       };
