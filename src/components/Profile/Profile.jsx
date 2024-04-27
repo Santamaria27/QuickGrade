@@ -8,44 +8,37 @@ import './Profile.css';
 //new imports
 import { ref, uploadBytes,listAll ,getDownloadURL } from 'firebase/storage';
 
-
 function Profile() {
   const [questionPaper, setQuestionPaper] = useState([]);
   const [answerKey, setAnswerKey] = useState([]);
   const [answerPaper, setAnswerPaper] = useState([]);
+  const [qnid, setID] = useState("")
 
-  const handleDrop = (e, targetArea) => {
-    e.preventDefault();
-    const file = e.dataTransfer.files[0];
-    if (targetArea === 'questionPaper') {
+  const handleDrop = (e, targetArea, method) => {
+    e.preventDefault()
+    let file = []
+    if (method === 'drop'){
+      file = e.dataTransfer.files[0];
+    }  else {
+      file = e.target.files[0];
+    }
+
+    if (targetArea === 'questionpaper') {
       setQuestionPaper([file]);
-    } else if (targetArea === 'answerKey') {
+    } else if (targetArea === 'answerkey') {
       setAnswerKey([file]);
-    } else if (targetArea === 'answerPaper') {
+    } else if (targetArea === 'answerpaper') {
       setAnswerPaper([file]);
-  }
-};
-
+    }
+  };
 
   const allowDrop = (e) => {
     e.preventDefault();
   };
 
   const handleButtonClick = (targetArea) => {
-    document.getElementById(`${targetArea}-file-input`).click();
-    
+    document.getElementById(`${targetArea}-file-input`).click();   
   };
-
-  const handleFileChange = (e, targetArea) => {
-    const file = e.target.files[0];
-    if (targetArea === 'questionPaper') {
-      setQuestionPaper([file]);
-    } else if (targetArea === 'answerKey') {
-      setAnswerKey([file]);
-    } else if (targetArea === 'answerPaper') {
-      setAnswerPaper([file]);
-    }
-};
 
   //backend
   const [name, setName] = useState('');
@@ -53,10 +46,10 @@ function Profile() {
   const [institution, setInstitution] = useState('');
   const [email, setEmail] = useState('');
   const nav = useNavigate();
+  const loggedUserId = localStorage.getItem('userId');
 
   useEffect(() => {
     const fetchUserData = async () => {
-      const loggedUserId = localStorage.getItem('userId');
       const userDocRef = doc(db, 'Users', loggedUserId);
 
       try {
@@ -84,17 +77,13 @@ function Profile() {
       // Upload files to Firestore
       const uploadFile = async (file) => {
         console.log(file[0].name);
-        const storageRef = ref(storage, `uploads/${file[0].name}`);
-        
+        const storageRef = ref(storage, `uploads/${file[0].name}`);       
         const metadata = { contentType: file[0].type };   
         console.log(`metadata: ${metadata}`)      
-        const snapshot = await uploadBytes(storageRef, file[0]);
+        await uploadBytes(storageRef, file[0]);
 
         console.log('Upload successful:', file[0].name);
-        const downloadURL = await getDownloadURL(snapshot.ref);
-        console.log(`url: ${downloadURL}`);
-
-        return downloadURL;  
+        return file[0].name;  
 
       };
 
@@ -103,26 +92,23 @@ function Profile() {
         uploadFile(answerKey),
         uploadFile(answerPaper)
       ]);
-  
-      // Get user ID from local storage
-      const userId = localStorage.getItem('userId');
-  
+    
       // Insert data into Firestore
-      const questionPaperRef = await addDoc(collection(db, 'questionPapers'), {
-        userId,
-        questionPaperUrl,
-        answerKeyUrl
+      const questionPaperRef = await addDoc(collection(db, 'QnAndKeys'), {
+        "User_id" : loggedUserId,
+        "qn_paper" : questionPaperUrl,
+        "ans_key" : answerKeyUrl,
       });
   
-      const questionId = questionPaperRef.id;
-  
+      setID(questionPaperRef.id);
+
       const answerPaperData = {
-        userId,
-        questionId,
-        answerPaperUrl
+        "User_id" : loggedUserId,
+        "Qn_id" : questionId,
+        "Paper" :answerPaperUrl
       };
 
-      await addDoc(collection(db, 'answerPapers'), answerPaperData); 
+      await addDoc(collection(db, 'AnsPapers'), answerPaperData); 
       alert('Files submitted successfully!');
       
     } catch (error) {
@@ -131,14 +117,13 @@ function Profile() {
     }
   };
 
-
   return (
     <div className="App">
         
       <h1>Welcome to QuickGrade {name} Teacher... Let's get started</h1>
       <div className="contain">
           <h2>Question Paper</h2>
-          <div className="box" onDrop={(e) => handleDrop(e, 'questionPaper')} onDragOver={allowDrop}>
+          <div className="box" onDrop={(e) => handleDrop(e, 'questionPaper', 'drop')} onDragOver={allowDrop}>
             <p>Drag and Drop Here</p>
             {questionPaper.length > 0 && <img src={URL.createObjectURL(questionPaper[0])} alt="Question Paper" />}
             <button onClick={() => handleButtonClick('questionPaper')}>Upload a Media Image</button>
@@ -147,12 +132,12 @@ function Profile() {
               type="file"
               accept="image/*"
               style={{ display: 'none' }}
-              onChange={(e) => handleFileChange(e, 'questionPaper')}
+              onChange={(e) => handleDrop(e, 'questionPaper', 'change')}
             />
           </div>
 
         <h2>Answer Key</h2>
-        <div className="box" onDrop={(e) => handleDrop(e, 'answerKey')} onDragOver={allowDrop}>
+        <div className="box" onDrop={(e) => handleDrop(e, 'answerKey', 'drop')} onDragOver={allowDrop}>
           <p>Drag and Drop Here</p>
           {answerKey.length > 0 && <img src={URL.createObjectURL(answerKey[0])} alt="Answer Key" />}
           <button onClick={() => handleButtonClick('answerKey')}>Upload a Media Image</button>
@@ -161,12 +146,12 @@ function Profile() {
             type="file"
             accept="image/*"
             style={{ display: 'none' }}
-            onChange={(e) => handleFileChange(e, 'answerKey')}
+            onChange={(e) => handleDrop(e, 'answerKey', 'change')}
           />
         </div>
         
         <h2>Answer Paper</h2>
-        <div className="box" onDrop={(e) => handleDrop(e, 'answerPaper')} onDragOver={allowDrop}>
+        <div className="box" onDrop={(e) => handleDrop(e, 'answerPaper', 'drop')} onDragOver={allowDrop}>
           <p>Drag and Drop Here</p>
           {answerPaper.length > 0 && <img src={URL.createObjectURL(answerPaper[0])} alt="Answer Paper" />}
           <button onClick={() => handleButtonClick('answerPaper')}>Upload a Media Image</button>
@@ -175,7 +160,7 @@ function Profile() {
             type="file"
             accept="image/*"
             style={{ display: 'none' }}
-            onChange={(e) => handleFileChange(e, 'answerPaper')}
+            onChange={(e) => handleDrop(e, 'answerPaper', 'change')}
           />
         </div>
         <div className='submit-container'>
@@ -192,5 +177,3 @@ function Profile() {
 
 export default Profile;
 
-/*https://firebasestorage.googleapis.com/v0/b/gradeease-57107.appspot.com/o/uploads%2Fhis_pc.jpg?alt=media&token=b5df8288-b2da-4d9a-95a1-65c854b2b3fd */
-/*https://firebasestorage.googleapis.com/v0/b/gradeease-57107.appspot.com/o/uploads%2FIMG-20240418-WA0008.jpg?alt=media&token=cab211e1-f0ae-41b0-8287-2800ecb224be */
