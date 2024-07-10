@@ -1,0 +1,31 @@
+.Card {
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+
+  }
+  
+  .score-info {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+  
+  .mark-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  .question-info {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .answer-info {
+    display: flex;
+    justify-content: space-between;
+  }

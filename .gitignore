@@ -23,3 +23,9 @@ dist-ssr
 *.sln
 *.sw?
 .env
+
+api/firebase-SA.json
+api/gcloud-SA.json
+api/openAPI
+functions/firebase-SA.json
+functions/gcloud.SA.json
