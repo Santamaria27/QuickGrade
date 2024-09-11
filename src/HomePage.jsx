@@ -43,3 +43,5 @@ const HomePage = () => {
 }
 
 export default HomePage
+
+//content inside the <modal> ..</modal> is passed as values to children --> this is a specialprop that allows you to pass jsx elements or components to other components
