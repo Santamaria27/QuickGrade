@@ -101,7 +101,8 @@ function Profile() {
         return file[0].name;  
 
       };
-
+      
+      //Promise.all returns success when all the async functions in the array is successful. the functions run parallely. if one of them fails, it returns error
       const [questionPaperUrl, answerKeyUrl, answerPaperUrl] = await Promise.all([
         uploadFile(questionPaper),
         uploadFile(answerKey),
